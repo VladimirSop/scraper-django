@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Linella Products</title>
+</head>
+<body>
+
+<h1>Список товаров Linella</h1>
+
+<ul>
+    {% for product in products %}
+        <li>
+            <a href="{{ product.link }}" target="_blank">{{ product.name }}</a>
+            - {{ product.price }} MDL
+            <style>
+    li {
+        margin-bottom: 15px; /* пробел между товарами */
+        padding: 10px;
+        border-bottom: 1px solid #ddd; /* тонкая линия для визуального разделения */
+    }
+    li a {
+        text-decoration: none;
+        color: #333;
+    }
+    li a:hover {
+        color: #007bff;
+    }
+</style>
+
+        </li>
+    {% empty %}
+        <li>Нет товаров</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
