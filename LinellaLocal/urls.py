@@ -20,5 +20,5 @@ from scraper import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.linella_scraper, name='linella-scraper'),
+    path('', views.product_list, name='product_list'),
 ]

@@ -5,10 +5,15 @@
 </head>
 <body>
 
+<form method="get">
+    <input type="text" name="q" placeholder="Поиск..." value="{{ query }}">
+    <button type="submit">Найти</button>
+</form>
+
 <h1>Список товаров Linella</h1>
 
 <ul>
-    {% for product in products %}
+    {% for product in page_obj %}
         <li>
             <a href="{{ product.link }}" target="_blank">{{ product.name }}</a>
             - {{ product.price }} MDL
@@ -32,6 +37,19 @@
         <li>Нет товаров</li>
     {% endfor %}
 </ul>
+<div style="margin-top: 20px;">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}&q={{ query }}">← Назад</a>
+    {% endif %}
+
+    <span>
+        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&q={{ query }}">Вперёд →</a>
+    {% endif %}
+</div>
 
 </body>
 </html>
