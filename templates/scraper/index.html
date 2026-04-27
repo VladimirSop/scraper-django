@@ -5,6 +5,18 @@
 </head>
 <body>
 
+<div style="margin-bottom: 20px;">
+    <a href="{% url 'users:login' %}" style="
+        padding: 8px 15px;
+        background: #27ae60;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    ">
+        Войти
+    </a>
+</div>
+
 <form method="get">
     <input type="text" name="q" placeholder="Поиск..." value="{{ query }}">
     <button type="submit">Найти</button>

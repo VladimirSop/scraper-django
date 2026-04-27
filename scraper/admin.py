@@ -1,4 +1,5 @@
 from django.contrib import admin
-from scraper.models import Product
+from users.models import User
 
-admin.site.register(Product)
+
+admin.site.register(User)

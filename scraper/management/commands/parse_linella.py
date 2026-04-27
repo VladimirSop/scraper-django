@@ -8,7 +8,7 @@ from time import sleep
 
 
 class Command(BaseCommand):
-    help = "Парсит магазин и сохраняет в БД"
+    help = "Scrap and save in DB"
 
     def handle(self, *args, **kwargs):
         headers = {"User-Agent": "Mozilla/5.0"}
@@ -44,4 +44,4 @@ class Command(BaseCommand):
                     }
                 )
 
-        self.stdout.write(self.style.SUCCESS("Парсинг завершён"))
+        self.stdout.write(self.style.SUCCESS("End Scrapping"))
