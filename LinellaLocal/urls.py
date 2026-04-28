@@ -22,5 +22,6 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.product_list, name='product_list'),
+    path('', include('scraper.urls')),
     path('users/', include('users.urls', namespace='users')),
 ]
