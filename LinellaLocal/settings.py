@@ -122,3 +122,4 @@ STATIC_URL = 'static/'
 # Users
 
 AUTH_USER_MODEL = 'users.User'
+LOGOUT_REDIRECT_URL = '/'

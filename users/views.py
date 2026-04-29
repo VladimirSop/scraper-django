@@ -1,8 +1,9 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 from users.models import User
-from users.form import UserLoginForm, UserRegistrationForm
+from users.form import UserLoginForm, UserRegistrationForm, UserProfileForm
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -31,3 +32,14 @@ def registration(request):
         form = UserRegistrationForm()
     context = {"form": form}
     return render(request, 'users/registration.html', context)
+
+def profile(request):
+    if request.method == "POST":
+        form = UserProfileForm(instance=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('users:profile'))
+    else:
+        form = UserProfileForm(instance=request.user)
+    context = {'title': 'Profile', 'form': form}
+    return render(request, "users/profile.html", context)

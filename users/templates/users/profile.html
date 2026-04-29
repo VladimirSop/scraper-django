@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Профиль</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f8;
+        }
+
+        .container {
+            width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            margin-bottom: 10px;
+            padding: 8px;
+        }
+
+        .btn {
+            padding: 10px;
+            background: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #1f6694;
+        }
+
+        .avatar {
+            display: block;
+            margin: 0 auto 15px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Личный кабинет</h2>
+
+    <!-- Аватар -->
+    {% if user.image %}
+        <img src="{{ user.image.url }}" class="avatar">
+    {% endif %}
+
+    <!-- ВОТ ГДЕ ФОРМА -->
+    <form action="{% url 'users:profile' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>Логин:</label>
+        {{ form.username }}
+
+        <label>Имя:</label>
+        {{ form.first_name }}
+
+        <label>Фамилия:</label>
+        {{ form.last_name }}
+
+        <label>Email:</label>
+        {{ form.email }}
+
+        <p>DEBUG username: {{ user.username }}</p>
+        <p>DEBUG first_name: {{ user.first_name }}</p>
+        <p>DEBUG last_name: {{ user.last_name }}</p>
+        <p>DEBUG email: {{ user.email }}</p>
+        <button type="submit" class="btn">Сохранить</button>
+    </form>
+
+    <a href="/" class="back">← На главную</a>
+</div>
+
+</body>
+</html>

@@ -2,19 +2,55 @@
 <html>
 <head>
     <title>Linella Products</title>
+    <style>
+        li {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        li a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        li a:hover {
+            color: #007bff;
+        }
+
+        .top-bar {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .login-btn {
+            background: #27ae60;
+        }
+
+        .profile-btn {
+            background: #2980b9;
+        }
+    </style>
 </head>
 <body>
 
-<div style="margin-bottom: 20px;">
-    <a href="{% url 'users:login' %}" style="
-        padding: 8px 15px;
-        background: #27ae60;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-    ">
-        Войти
-    </a>
+<div class="top-bar">
+    {% if user.is_authenticated %}
+        <a href="{% url 'users:profile' %}" class="btn profile-btn">
+            Личный кабинет
+        </a>
+    {% else %}
+        <a href="{% url 'users:login' %}" class="btn login-btn">
+            Войти
+        </a>
+    {% endif %}
 </div>
 
 <form method="get">
@@ -29,26 +65,12 @@
         <li>
             <a href="{{ product.link }}" target="_blank">{{ product.name }}</a>
             - {{ product.price }} MDL
-            <style>
-    li {
-        margin-bottom: 15px; /* пробел между товарами */
-        padding: 10px;
-        border-bottom: 1px solid #ddd; /* тонкая линия для визуального разделения */
-    }
-    li a {
-        text-decoration: none;
-        color: #333;
-    }
-    li a:hover {
-        color: #007bff;
-    }
-</style>
-
         </li>
     {% empty %}
         <li>Нет товаров</li>
     {% endfor %}
 </ul>
+
 <div style="margin-top: 20px;">
     {% if page_obj.has_previous %}
         <a href="?page={{ page_obj.previous_page_number }}&q={{ query }}">← Назад</a>
