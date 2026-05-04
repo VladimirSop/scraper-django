@@ -1,89 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+    <meta charset="UTF-8">
     <title>Linella Products</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-        li {
-            margin-bottom: 15px;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
+        body {
+            background: #f5f7fa;
         }
 
-        li a {
-            text-decoration: none;
-            color: #333;
+        .product-card {
+            transition: 0.2s;
         }
 
-        li a:hover {
-            color: #007bff;
+        .product-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
         .top-bar {
             margin-bottom: 20px;
         }
-
-        .btn {
-            padding: 8px 15px;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-
-        .login-btn {
-            background: #27ae60;
-        }
-
-        .profile-btn {
-            background: #2980b9;
-        }
     </style>
 </head>
 <body>
 
-<div class="top-bar">
-    {% if user.is_authenticated %}
-        <a href="{% url 'users:profile' %}" class="btn profile-btn">
-            Личный кабинет
-        <a href="{% url 'users:logout' %}">Выйти</a>
-        </a>
-    {% else %}
-        <a href="{% url 'users:login' %}" class="btn login-btn">
-            Войти
-        </a>
-    {% endif %}
-</div>
+<div class="container mt-4">
 
-<form method="get">
-    <input type="text" name="q" placeholder="Поиск..." value="{{ query }}">
-    <button type="submit">Найти</button>
-</form>
+    <!-- Верхняя панель -->
+    <div class="d-flex justify-content-between align-items-center top-bar">
 
-<h1>Список товаров Linella</h1>
+        <h3>Catalog</h3>
 
-<ul>
-    {% for product in page_obj %}
-        <li>
-            <a href="{{ product.link }}" target="_blank">{{ product.name }}</a>
-            - {{ product.price }} MDL
-        </li>
-    {% empty %}
-        <li>Нет товаров</li>
-    {% endfor %}
-</ul>
+        <div>
+            {% if user.is_authenticated %}
+                <a href="{% url 'users:profile' %}" class="btn btn-primary">Профиль</a>
+                <a href="{% url 'users:logout' %}" class="btn btn-danger">Выйти</a>
+            {% else %}
+                <a href="{% url 'users:login' %}" class="btn btn-success">Войти</a>
+            {% endif %}
+        </div>
+    </div>
 
-<div style="margin-top: 20px;">
-    {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}&q={{ query }}">← Назад</a>
-    {% endif %}
+    <!-- Поиск -->
+    <form method="get" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Поиск товаров..." value="{{ query }}">
+            <button class="btn btn-dark" type="submit">Найти</button>
+        </div>
+    </form>
 
-    <span>
-        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
-    </span>
+    <!-- Список товаров -->
+    <div class="row">
+        {% for product in page_obj %}
+            <div class="col-md-4 mb-4">
+                <div class="card product-card p-3">
+                    <h5>{{ product.name }}</h5>
+                    <p class="text-muted">{{ product.price }} MDL</p>
+                    <a href="{{ product.link }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                        Открыть
+                    </a>
+                </div>
+            </div>
+        {% empty %}
+            <p>Нет товаров</p>
+        {% endfor %}
+    </div>
 
-    {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}&q={{ query }}">Вперёд →</a>
-    {% endif %}
+    <!-- Пагинация -->
+    <div class="d-flex justify-content-center mt-4">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-outline-secondary me-2"
+               href="?page={{ page_obj.previous_page_number }}&q={{ query }}">
+               ← Назад
+            </a>
+        {% endif %}
+
+        <span class="align-self-center">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a class="btn btn-outline-secondary ms-2"
+               href="?page={{ page_obj.next_page_number }}&q={{ query }}">
+               Вперёд →
+            </a>
+        {% endif %}
+    </div>
+
 </div>
 
 </body>

@@ -16,7 +16,7 @@ def login(request): #here is all authenticate!
             user = auth.authenticate(username=username, password=password)
             if user:
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect('/')
     else:
         form = UserLoginForm()
     context = {"form": form}
@@ -46,4 +46,4 @@ def profile(request):
 
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect('/')
