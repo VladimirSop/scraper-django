@@ -41,6 +41,9 @@
     <div class="ms-auto">
         {% if user.is_authenticated %}
             <a href="{% url 'users:profile' %}" class="btn btn-outline-light btn-sm">Профиль</a>
+            <a href="/cart/" class="btn btn-warning btn-sm">
+                🛒 Корзина
+            </a>
             <a href="{% url 'users:logout' %}" class="btn btn-danger btn-sm">Выйти</a>
         {% else %}
             <a href="{% url 'users:login' %}" class="btn btn-success btn-sm">Войти</a>
@@ -82,10 +85,20 @@
                     <div class="mt-auto">
                         <p class="price">{{ product.price }} MDL</p>
 
-                        <a href="{{ product.link }}" target="_blank"
-                           class="btn btn-outline-primary w-100 btn-sm">
-                            Открыть
-                        </a>
+                        <div class="d-flex gap-2">
+
+                            <a href="{{ product.link }}"
+                               target="_blank"
+                               class="btn btn-outline-primary btn-sm w-50">
+                                Открыть
+                            </a>
+
+                            <a href="{% url 'add_to_cart' product.id %}"
+                               class="btn btn-success btn-sm w-50">
+                                🛒
+                            </a>
+
+                        </div>
                     </div>
 
                 </div>
